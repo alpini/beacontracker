@@ -1,0 +1,5 @@
+.DS_Store
+# Nice reading: http://stackoverflow.com/questions/12817011/best-practices-for-xcode-git-for-multi-developer-projects
+*.xcuserstate
+project.xcworkspace/
+xcuserdata/
