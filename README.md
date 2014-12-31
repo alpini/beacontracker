@@ -1,4 +1,5 @@
-_BEACON_
+beacontracker: Bluetooth Low-Energy beacon tracker
+==================================================
 
 The goals of this implementation are as follows:
 
@@ -6,14 +7,16 @@ The goals of this implementation are as follows:
 * When a beacon is lost, alert if it gets back in range
 * Select beacons to track
 
-_Sprint 1: Beep if a beacon is in range_
+Sprint 1: Beep if a beacon is in range (implemented)
+--------------------------------------
 
 + Detect a list of devices in range
 + If there is a device in range, display its details
 * Play a sonar sound every time a beacon is received, with volume of the sound being proportional to the RSSI level
 * Detect it Bluetooth is disabled and show an alert
 
-_Sprint 2: Map with distance, information and lost/track modes_
+Sprint 2: Map with distance, information and lost/track modes
+-------------------------------------------------------------
 
 * Show map with current locations
 * If in range, put beacon name in a circle
@@ -21,7 +24,8 @@ _Sprint 2: Map with distance, information and lost/track modes_
 * Beep depending on the selected mode
 * Click on circle and display information on mode / signal / distance / battery
 
-_Sprint 3: Select list of beacons_
+Sprint 3: Select list of beacons
+--------------------------------
 
 * Retrieve list of beacons from user profile
 * Show a list of beacons with their associated image when the application starts
