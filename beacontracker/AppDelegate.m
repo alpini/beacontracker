@@ -24,7 +24,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"gmbl_hide_bt_power_alert_view"]; // This does not seem to work
+//    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"gmbl_hide_bt_power_alert_view"]; // This does not seem to work
     
     [self detectBluetooth];
     
@@ -99,7 +99,7 @@
     if(!self.bluetoothManager)
     {
         // Put on main queue so we can call UIAlertView from delegate callbacks.
-        self.bluetoothManager = [[CBCentralManager alloc] initWithDelegate:self queue:dispatch_get_main_queue()];
+        self.bluetoothManager = [[CBCentralManager alloc] initWithDelegate:self queue:dispatch_get_main_queue() options:@{CBCentralManagerOptionShowPowerAlertKey:[NSNumber numberWithBool:NO]}];
     }
     [self centralManagerDidUpdateState:self.bluetoothManager]; // Show initial state
 }
