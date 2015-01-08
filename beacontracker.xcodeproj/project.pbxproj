@@ -21,12 +21,8 @@
 		4C70DA001A474EE300B3626B /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C70D9FF1A474EE300B3626B /* MapKit.framework */; };
 		4C70DA021A474EEC00B3626B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C70DA011A474EEC00B3626B /* Security.framework */; };
 		4C70DBDE1A474F9E00B3626B /* Common.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C70DAFE1A474F9E00B3626B /* Common.framework */; };
-		4C70DBDF1A474F9E00B3626B /* ContextCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C70DB001A474F9E00B3626B /* ContextCore.framework */; };
-		4C70DBE01A474F9E00B3626B /* ContextLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C70DB021A474F9E00B3626B /* ContextLocation.framework */; };
 		4C70DBE21A474F9E00B3626B /* ContextProfiling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C70DB061A474F9E00B3626B /* ContextProfiling.framework */; };
-		4C70DBE41A474F9E00B3626B /* NetworkServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C70DB091A474F9E00B3626B /* NetworkServices.framework */; };
 		4C70DBEE1A474FD500B3626B /* FYX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C70DBED1A474FD500B3626B /* FYX.framework */; };
-		4C70DBF91A47500D00B3626B /* Common.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C70DBF01A47500D00B3626B /* Common.framework */; };
 		4C70DBFA1A47500D00B3626B /* ContextCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C70DBF21A47500D00B3626B /* ContextCore.framework */; };
 		4C70DBFB1A47500D00B3626B /* ContextLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C70DBF41A47500D00B3626B /* ContextLocation.framework */; };
 		4C70DBFD1A47500D00B3626B /* NetworkServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C70DBF81A47500D00B3626B /* NetworkServices.framework */; };
@@ -345,12 +341,8 @@
 				4C70DBE21A474F9E00B3626B /* ContextProfiling.framework in Frameworks */,
 				4C70D9FC1A474ECA00B3626B /* CoreData.framework in Frameworks */,
 				4C70D9FA1A474EC300B3626B /* CoreLocation.framework in Frameworks */,
-				4C70DBE41A474F9E00B3626B /* NetworkServices.framework in Frameworks */,
 				4C70DBDE1A474F9E00B3626B /* Common.framework in Frameworks */,
-				4C70DBE01A474F9E00B3626B /* ContextLocation.framework in Frameworks */,
-				4C70DBF91A47500D00B3626B /* Common.framework in Frameworks */,
 				4C70D9F81A474EB200B3626B /* CoreBluetooth.framework in Frameworks */,
-				4C70DBDF1A474F9E00B3626B /* ContextCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

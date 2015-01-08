@@ -71,6 +71,11 @@
 // FYXServiceDelegate - Ass4ss1n Zer0
 - (void)serviceStarted {
     NSLog(@"FYX service started successfully");
+    
+    ViewController *controller = (ViewController*)self.window.rootViewController;
+    Beacon *beacon = [[Beacon alloc] initWithName:@"Test transmitter" RSSI:[NSNumber numberWithDouble:-66] Date:[NSDate date] AndCoordinate:controller.mapView.userLocation.coordinate];
+    
+    [controller seenBeacon:beacon];
 }
 
 - (void)startServiceFailed:(NSError *)error {
@@ -81,14 +86,10 @@
 // FYXSightingDelegate
 - (void)didReceiveSighting:(FYXTransmitter *)transmitter time:(NSDate *)time RSSI:(NSNumber *)RSSI {
     NSLog(@"%@ Received sighting for beacon '%@' with strenght: %@", time, transmitter, RSSI);
-    
-    Beacon *beacon = [[Beacon alloc] init];
-    
-    beacon.name = transmitter.name;
-    beacon.rssi = RSSI;
-    beacon.seen = time;
-    
+
     ViewController *controller = (ViewController*)self.window.rootViewController;
+    Beacon *beacon = [[Beacon alloc] initWithName:transmitter.name RSSI:RSSI Date:time AndCoordinate:controller.mapView.userLocation.coordinate];
+    
     [controller seenBeacon:beacon];
     
 }
@@ -125,4 +126,6 @@
     }
     
 }
+
+
 @end

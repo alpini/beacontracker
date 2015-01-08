@@ -36,6 +36,13 @@ NSMutableArray *beacons;
     NSURL *pingSoundURLHigh = [[NSBundle mainBundle] URLForResource:@"ping_high" withExtension:@"aiff"];
     self.pingSoundCFURLHigh = (CFURLRef) CFBridgingRetain(pingSoundURLHigh);
     ret = AudioServicesCreateSystemSoundID(self.pingSoundCFURLHigh, &self->pingSoundHigh);
+    
+    self.mapView.delegate = self;
+    [self.mapView setShowsUserLocation:TRUE];
+
+    MKCoordinateRegion mkcr = MKCoordinateRegionMakeWithDistance(self.mapView.userLocation.coordinate,100.0,100.0);
+    [self.mapView setRegion:mkcr animated: FALSE];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -99,17 +106,22 @@ NSMutableArray *beacons;
 - (void) seenBeacon:(Beacon *)beacon
 {
     Beacon *tmp;
-    
+
     tmp = [self getBeacon:beacon.name];
     [self playPing:[beacon.rssi intValue]];
-    
+
+    // Add sample overlay
+
     if(tmp) {
-        tmp.rssi = beacon.rssi;
-        tmp.seen = beacon.seen;
-    } else {
-        [beacons addObject:beacon];
+        [self.mapView removeOverlay:tmp];
+        [self.mapView removeAnnotation:tmp];
+        [beacons removeObject:tmp];
     }
 
+    [beacons addObject:beacon];
+    [self.mapView addOverlay:beacon level:MKOverlayLevelAboveLabels];
+    [self.mapView addAnnotation:beacon];
+    
     [self.tableView reloadData];
 }
 
@@ -126,4 +138,70 @@ NSMutableArray *beacons;
     AudioServicesPlaySystemSound(*pingSound);
 }
 
+- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
+    [self.mapView setCenterCoordinate:[userLocation coordinate]];
+}
+
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
+    if (   [annotation isKindOfClass:[Beacon class]]) {
+        Beacon *beacon = (Beacon *)annotation;
+        static NSString *identifier = @"Beacon";
+        
+        MKAnnotationView *annotationView = (MKAnnotationView *) [mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
+        if (annotationView == nil) {
+            annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
+            annotationView.enabled = YES;
+            annotationView.canShowCallout = YES;
+            // annotationView.image = [UIImage imageNamed:@"arrest.png"];//here we use a nice image instead of the default pins
+        } else {
+            annotationView.annotation = annotation;
+        }
+        
+        return annotationView;
+    }
+    
+    return nil;
+}
+
+- (MKOverlayRenderer *)mapView:(MKMapView *)mapView
+            rendererForOverlay:(id<MKOverlay>)overlay
+{
+    
+    if ([overlay isKindOfClass:[Beacon class]]){
+        
+        Beacon *beacon = (Beacon *)overlay;
+        
+        MKCircle *circle = [MKCircle circleWithCenterCoordinate:beacon.coordinate radius:[beacon.distance doubleValue]];
+        MKCircleRenderer *circleR = [[MKCircleRenderer alloc] initWithCircle:circle];
+
+        circleR.fillColor = [UIColor redColor];
+//        circleR.strokeColor = [UIColor whiteColor];
+        circleR.alpha = 0.5f;
+        
+        return circleR;
+    }
+    return nil;
+}
+
+- (IBAction)mapTypeChanged:(id)sender {
+    switch (self.mapTypeSegmentedControl.selectedSegmentIndex) {
+        case 0:
+            self.mapView.mapType = MKMapTypeStandard;
+            break;
+        case 1:
+            self.mapView.mapType = MKMapTypeHybrid;
+            break;
+        case 2:
+            self.mapView.mapType = MKMapTypeSatellite;
+            break;
+        default:
+            break;
+    }
+    /*
+    Beacon *beacon = [[Beacon alloc] initWithName:@"Test transmitter" RSSI:[NSNumber numberWithDouble:-66] Date:[NSDate date] AndCoordinate:self.mapView.userLocation.coordinate];
+    
+    [self seenBeacon:beacon];
+     */
+
+}
 @end
