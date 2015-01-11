@@ -21,8 +21,9 @@ Version 2: Map with distance, information and lost/track modes
 + Show map with current locations
 + If in range, put beacon name in a circle
 + Draw a circle with theoretical range of the beacon
++ Click on circle and display information on mode / signal / distance
 - Beep depending on the selected mode
-- Click on circle and display information on mode / signal / distance / battery
+- BUG: Sometimes beacons do not initialize, probably due to lack of connectivity to Gimbal backend?
 
 Version 3: Select list of beacons
 ---------------------------------
