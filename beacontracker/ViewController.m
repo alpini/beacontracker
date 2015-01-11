@@ -105,28 +105,35 @@ NSMutableArray *beacons;
 
 - (void) seenBeacon:(Beacon *)beacon
 {
-    Beacon *tmp;
-
-    tmp = [self getBeacon:beacon.name];
-    [self playPing:[beacon.rssi intValue]];
-
-    // Add sample overlay
-
+    // Check if there is already an annotation on the map for this beacon
+    Beacon *tmp = [self getBeacon:beacon.name];
+    
     if(tmp) {
-        [self.mapView removeOverlay:tmp];
-        [self.mapView removeAnnotation:tmp];
-        [beacons removeObject:tmp];
+
+        NSArray *overlays = [self.mapView overlays];
+        for(int i=0; i < overlays.count; i++) {
+            Beacon *overlay = overlays[i];
+            if([overlay.name isEqualToString:beacon.name]) {
+                [self.mapView removeOverlay:overlay];
+                break;
+            }
+        }
+        
+        [tmp updateDetails:beacon];
+    } else {
+        // Add overlay and annotation
+        [beacons addObject:beacon];
+        [self.mapView addAnnotation:beacon];
     }
 
-    [beacons addObject:beacon];
     [self.mapView addOverlay:beacon level:MKOverlayLevelAboveLabels];
-    [self.mapView addAnnotation:beacon];
-    
+
     [self.tableView reloadData];
+
+    [self playPing:[beacon.rssi intValue]];
 }
 
 - (void) playPing:(int)signal {
-    
     SystemSoundID *pingSound = &self->pingSoundHigh;
 
     if(signal < -90) {
@@ -156,7 +163,7 @@ NSMutableArray *beacons;
         } else {
             annotationView.annotation = annotation;
         }
-        
+
         return annotationView;
     }
     
@@ -184,6 +191,9 @@ NSMutableArray *beacons;
 }
 
 - (IBAction)mapTypeChanged:(id)sender {
+    double rssi = arc4random_uniform(100);
+    rssi = rssi * -1;
+
     switch (self.mapTypeSegmentedControl.selectedSegmentIndex) {
         case 0:
             self.mapView.mapType = MKMapTypeStandard;
@@ -197,11 +207,10 @@ NSMutableArray *beacons;
         default:
             break;
     }
-    /*
-    Beacon *beacon = [[Beacon alloc] initWithName:@"Test transmitter" RSSI:[NSNumber numberWithDouble:-66] Date:[NSDate date] AndCoordinate:self.mapView.userLocation.coordinate];
+/*
+    Beacon *beacon = [[Beacon alloc] initWithName:@"Test transmitter" RSSI:[NSNumber numberWithDouble:rssi] Date:[NSDate date] AndCoordinate:self.mapView.userLocation.coordinate];
     
     [self seenBeacon:beacon];
-     */
-
+*/
 }
 @end

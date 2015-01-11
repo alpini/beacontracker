@@ -24,4 +24,6 @@
 
 + (double) calculateAccuracyWithPower: (int) txPower AndRSSI: (double) rssi;
 
+- (void)updateDetails:(Beacon *)beacon;
+
 @end

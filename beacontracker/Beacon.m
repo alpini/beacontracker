@@ -40,6 +40,37 @@
     return self;
 }
 
+- (void)updateDetails:(Beacon *)beacon {
+    [self willChangeValueForKey:@"title"];
+    title = [beacon.title copy];
+    [self didChangeValueForKey:@"title"];
+
+    [self willChangeValueForKey:@"subtitle"];
+    subtitle = [beacon.subtitle copy];
+    [self didChangeValueForKey:@"subtitle"];
+
+    [self willChangeValueForKey:@"coordinate"];
+    coordinate = beacon.coordinate;
+    [self didChangeValueForKey:@"coordinate"];
+
+    [self willChangeValueForKey:@"name"];
+    name = [beacon.name copy];
+    [self didChangeValueForKey:@"name"];
+
+    [self willChangeValueForKey:@"rssi"];
+    rssi = [beacon.rssi copy];
+    [self didChangeValueForKey:@"rssi"];
+
+    [self willChangeValueForKey:@"seen"];
+    seen = [beacon.seen copy];
+    [self didChangeValueForKey:@"seen"];
+
+    [self willChangeValueForKey:@"boundingMapRect"];
+    boundingMapRect = beacon.boundingMapRect;
+    [self didChangeValueForKey:@"boundingMapRect"];
+    
+}
+
 - (void)setRssi:(NSNumber *)signal {
     rssi = signal;
 
